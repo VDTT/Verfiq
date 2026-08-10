@@ -3,480 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Números Temporários - Teste</title>
+    <title>Receber SMS Online</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #f4f6f9; padding: 15px; color: #333; }
+        
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { color: #1a73e8; font-size: 1.5rem; }
+        
+        .grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
+        
+        .card { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card h2 { font-size: 1.1rem; margin-bottom: 10px; color: #666; }
+        
+        /* Lista de números */
+        .number-btn {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border: 1px solid #ddd; border-radius: 6px;
+            margin-bottom: 8px; cursor: pointer; background: #fff;
         }
-
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: #1a73e8;
-            margin-bottom: 5px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Painel de Números */
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #555;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .number-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .number-item:hover, .number-item.active {
-            border-color: #1a73e8;
-            background-color: #e8f0fe;
-        }
-
-        .flag {
-            font-size: 1.2rem;
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Números Temporários - Teste</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: #1a73e8;
-            margin-bottom: 5px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Painel de Números */
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #555;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .number-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .number-item:hover, .number-item.active {
-            border-color: #1a73e8;
-            background-color: #e8f0fe;
-        }
-
-        .flag {
-            font-size: 1.2rem;
-            margin-right: 8px;
-        }
-
-        .country-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .phone {
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        /* Caixa de Mensagens */
-        .inbox-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .btn-simular {
-            background-color: #1a73e8;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-simular:hover {
-            background-color: #1557b0;
-        }
-
-        .message-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .message-card {
-            background-color: #f8f9fa;
-            border-left: 4px solid #1a73e8;
-            padding: 12px;
-            border-radius: 4px;
-        }
-
-        .message-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #777;
-            margin-bottom: 5px;
-        }
-
-        .message-sender {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .message-body {
-            font-size: 0.95rem;
-        }
-
-        .code-highlight {
-            font-weight: bold;
-            color: #d93025;
-            background-color: #feefae;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #888;
-            padding: 40px 0;
-        }
+        .number-btn.active { border-color: #1a73e8; background-color: #e8f0fe; font-weight: bold; }
+        
+        /* Caixa de mensagens */
+        .msg-item { background: #f8f9fa; border-left: 4px solid #1a73e8; padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+        .msg-top { display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-bottom: 4px; }
+        .msg-sender { font-weight: bold; color: #111; }
+        .code { background: #feefae; padding: 2px 5px; border-radius: 3px; font-weight: bold; color: #d93025; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Números Temporários (Simulador)</h1>
-        <p>Selecione um número e receba mensagens de teste em tempo real</p>
+        <h1>SMS Temporário</h1>
+        <p>Escolha um número para ver as mensagens recebidas</p>
     </header>
 
-    <div class="container">
-        <!-- Lista de Números por País -->
+    <div class="grid">
+        <!-- Países -->
         <div class="card">
-            <h2>Escolha um Número</h2>
-            <div id="numbers-list"></div>
+            <h2>Selecione o País:</h2>
+            <div id="lista-numeros"></div>
         </div>
 
-        <!-- Caixa de Entrada do Número Selecionado -->
+        <!-- Mensagens -->
         <div class="card">
-            <div class="inbox-header">
-                <h2>Mensagens Recebidas</h2>
-                <button class="btn-simular" onclick="simularMensagemNova()">+ Simular SMS</button>
-            </div>
-            <div id="active-phone-display" style="margin-bottom: 15px; font-weight: bold; color: #1a73e8;"></div>
-            <div class="message-list" id="message-list">
-                <!-- As mensagens aparecerão aqui -->
-            </div>
+            <h2>Mensagens do Número: <span id="num-atual" style="color: #1a73e8;"></span></h2>
+            <div id="lista-mensagens"></div>
         </div>
     </div>
 
     <script>
-        // Dados de teste fictícios dos 5 países
-        const numerosDB = [
-            { id: 1, pais: "EUA", bandeira: "🇺🇸", numero: "+1 (555) 019-2834" },
-            { id: 2, pais: "Canadá", bandeira: "🇨🇦", numero: "+1 (416) 555-0147" },
-            { id: 3, pais: "Reino Unido", bandeira: "🇬🇧", numero: "+44 7700 900077" },
-            { id: 4, pais: "Brasil", bandeira: "🇧🇷", numero: "+55 (11) 98765-4321" },
-            { id: 5, pais: "França", bandeira: "🇫🇷", numero: "+33 6 12 34 56 78" }
-        ];
-
-        // Mensagens fictícias pré-definidas para simulação
-        const modelosMensagens = [
-            { remetente: "WhatsApp", texto: "Seu código de verificação do WhatsApp é: <span class='code-highlight'>849-201</span>." },
-            { remetente: "Google", texto: "G- <span class='code-highlight'>492018</span> é seu código de verificação do Google." },
-            { remetente: "Telegram", texto: "Código de acesso do Telegram: <span class='code-highlight'>30291</span>. Não compartilhe." },
-            { remetente: "Uber", texto: "Seu código Uber é <span class='code-highlight'>5821</span>. Nunca compartilhe este código." },
-            { remetente: "Netflix", texto: "Seu código para redefinição de senha é <span class='code-highlight'>194820</span>." },
-            { remetente: "Instagram", texto: "Use o código <span class='code-highlight'>730-192</span> para confirmar sua conta." }
-        ];
-
-        // Armazenamento em memória das mensagens enviadas
-        let mensagens = {};
-        let numeroSelecionadoId = 1;
-
-        // Inicializar Banco de dados de mensagens
-        numerosDB.forEach(item => {
-            mensagens[item.id] = [];
-        });
-
-        // Carrega a lista de números na interface
-        function carregarNumeros() {
-            const listContainer = document.getElementById("numbers-list");
-            listContainer.innerHTML = "";
-
-            numerosDB.forEach(item => {
-                const div = document.createElement("div");
-                div.className = `number-item ${item.id === numeroSelecionadoId ? 'active' : ''}`;
-                div.onclick = () => selecionarNumero(item.id);
-                div.innerHTML = `
-                    <div class="country-info">
-                        <span class="flag">${item.bandeira}</span>
-                        <span>${item.pais}</span>
-                    </div>
-                    <span class="phone">${item.numero}</span>
-                `;
-                listContainer.appendChild(div);
-            });
-        }
-
-        // Seleciona um número da lista
-        function selecionarNumero(id) {
-            numeroSelecionadoId = id;
-            carregarNumeros();
-            renderizarMensagens();
-        }
-
-        // Renderiza as mensagens do número ativo
-        function renderizarMensagens() {
-            const numObj = numerosDB.find(n => n.id === numeroSelecionadoId);
-            document.getElementById("active-phone-display").innerText = `${numObj.bandeira} ${numObj.pais} (${numObj.numero})`;
-
-            const messageList = document.getElementById("message-list");
-            const listaAtual = mensagens[numeroSelecionadoId];
-
-            if (listaAtual.length === 0) {
-                messageList.innerHTML = `<div class="empty-state">Nenhuma mensagem recebida ainda.<br>Clique em "+ Simular SMS" para testar.</div>`;
-                return;
+        // Dados dos números e suas mensagens fixas
+        const dados = [
+            {
+                id: 1, pais: "🇺🇸 EUA", numero: "+1 (555) 019-2834",
+                mensagens: [
+                    { remetente: "WhatsApp", hora: "Há 2 min", texto: "Seu código é <span class='code'>482-109</span>" },
+                    { remetente: "Google", hora: "Há 15 min", texto: "G-<span class='code'>902184</span> é seu código de verificação." }
+                ]
+            },
+            {
+                id: 2, pais: "🇨🇦 Canadá", numero: "+1 (416) 555-0147",
+                mensagens: [
+                    { remetente: "Telegram", hora: "Há 5 min", texto: "Código de acesso: <span class='code'>59302</span>." },
+                    { remetente: "Netflix", hora: "Há 1 hora", texto: "Código para redefinição: <span class='code'>104928</span>" }
+                ]
+            },
+            {
+                id: 3, pais: "🇬🇧 Reino Unido", numero: "+44 7700 900077",
+                mensagens: [
+                    { remetente: "Uber", hora: "Há 10 min", texto: "Seu código Uber é <span class='code'>8821</span>." },
+                    { remetente: "Instagram", hora: "Há 30 min", texto: "Use o código <span class='code'>339-102</span> para entrar." }
+                ]
+            },
+            {
+                id: 4, pais: "🇧🇷 Brasil", numero: "+55 (11) 98765-4321",
+                mensagens: [
+                    { remetente: "iFood", hora: "Há 1 min", texto: "Seu código de confirmação é <span class='code'>7402</span>" },
+                    { remetente: "WhatsApp", hora: "Há 8 min", texto: "Seu código do WhatsApp: <span class='code'>193-840</span>" }
+                ]
+            },
+            {
+                id: 5, pais: "🇫🇷 França", numero: "+33 6 12 34 56 78",
+                mensagens: [
+                    { remetente: "TikTok", hora: "Há 12 min", texto: "<span class='code'>481920</span> é seu código de verificação." }
+                ]
             }
+        ];
 
-            messageList.innerHTML = "";
-            listaAtual.slice().reverse().forEach(msg => {
-                const card = document.createElement("div");
-                card.className = "message-card";
+        let selecionado = 1;
+
+        function render() {
+            // Renderiza lista de números
+            const divNumeros = document.getElementById('lista-numeros');
+            divNumeros.innerHTML = '';
+            dados.forEach(item => {
+                const btn = document.createElement('div');
+                btn.className = `number-btn ${item.id === selecionado ? 'active' : ''}`;
+                btn.onclick = () => { selecionado = item.id; render(); };
+                btn.innerHTML = `<span>${item.pais}</span> <span>${item.numero}</span>`;
+                divNumeros.appendChild(btn);
+            });
+
+            // Renderiza mensagens do número selecionado
+            const atual = dados.find(d => d.id === selecionado);
+            document.getElementById('num-atual').innerText = `${atual.pais} ${atual.numero}`;
+            
+            const divMsgs = document.getElementById('lista-mensagens');
+            divMsgs.innerHTML = '';
+            atual.mensagens.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'msg-item';
                 card.innerHTML = `
-                    <div class="message-meta">
-                        <span class="message-sender">${msg.remetente}</span>
-                        <span>${msg.horario}</span>
-                    </div>
-                    <div class="message-body">${msg.texto}</div>
+                    <div class="msg-top"><span class="msg-sender">${m.remetente}</span><span>${m.hora}</span></div>
+                    <div>${m.texto}</div>
                 `;
-                messageList.appendChild(card);
+                divMsgs.appendChild(card);
             });
         }
 
-        // Gera uma nova mensagem aleatória
-        function simularMensagemNova() {
-            const modelo = modelosMensagens[Math.floor(Math.random() * modelosMensagens.length)];
-            const agora = new Date();
-            const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-            const novaMsg = {
-                remetente: modelo.remetente,
-                texto: modelo.texto,
-                horario: horaFormatada
-            };
-
-            mensagens[numeroSelecionadoId].push(novaMsg);
-            renderizarMensagens();
-        }
-
-        // Inicialização
-        carregarNumeros();
-        // Gera 1 mensagem inicial para não ficar vazio
-        simularMensagemNova();
+        // Executa ao abrir
+        render();
     </script>
 </body>
 </html>
-￼Enter      margin-right: 8px;
-        }
-
-        .country-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .phone {
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        /* Caixa de Mensagens */
-        .inbox-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .btn-simular {
-            background-color: #1a73e8;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-simular:hover {
-            background-color: #1557b0;
-        }
-
-        .message-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .message-card {
-            background-color: #f8f9fa;
-            border-left: 4px solid #1a73e8;
-            padding: 12px;
-            border-radius: 4px;
-        }
-
-        .message-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #777;
-            margin-bottom: 5px;
-        }
-
-        .message-sender {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .message-body {
-            font-size: 0.95rem;
-        }
-
-        .code-highlight {
-            font-weight: bold;
-            color: #d93025;
-            background-color: #feefae;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #888;
-            padding: 40px 0;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>Números Temporários (Simulador)</h1>
-        <p>Selecione um número e receba mensagens de teste em tempo real</p>
-    </header>
-
-    <div class="container">
-        <!-- Lista de Números por País -->
-        <div class="card">
-            <h2>Escolha um Número</h2>
-            <div id="numbers-list"></div>
-        </div>
-
-        <!-- Caixa de Entrada do Número Selecionado -->
-        <div class="card">
-            <div class="inbox-header">
-                <h2>Mensagens Recebidas</h2>
-                <button class="btn-simular" onclick="simularMensagemNova()">+ Simular SMS</button>
-            </div>
-            <div id="active-phone-display" style="margin-bottom: 15px; font-weight: bold; color: #1a73e8;"></div>
-            <div class="message-list" id="message-list">
-                <!-- As mensagens aparecerão aqui -->
-            </div>
-        </div>
-    </div>
